@@ -1,0 +1,15 @@
+plugins {
+    id 'io.doctoolchain.pandoc'
+}
+
+task runPandoc ( type : io.doctoolchain.gradle.pandoc.PandocTask ) {
+    sourceFile  'example.md'
+    outputFile  "${buildDir}/example.html"
+
+    args '-r', 'markdown'
+    args '-t', 'html'
+}
+
+task runGradleTest {
+    dependsOn runPandoc
+}
