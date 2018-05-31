@@ -1,6 +1,7 @@
 plugins {
     id 'groovy'
     id 'org.ysb33r.gradletest' version '2.0-alpha-6'
+    id 'com.gradle.plugin-publish' version '0.9.7'
 }
 
 ext {
@@ -64,4 +65,20 @@ check.dependsOn integrationTest
 
 gradleTest {
     versions '3.5'
+}
+
+
+pluginBundle {
+    description = 'Run pandoc from Gradle without having it installed'
+    website = 'https://github.com/docToolchain/pandocGradlePlugin'
+    vcsUrl = 'https://github.com/docToolchain/pandocGradlePlugin.git'
+
+    tags = ['documentation', 'pandoc']
+
+    plugins {
+        basePlugin {
+            id = 'io.doctoolchain.pandoc'
+            displayName = 'Run pandoc from Gradle without having it installed'
+        }
+    }
 }
