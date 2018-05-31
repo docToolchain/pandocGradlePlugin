@@ -1,0 +1,10 @@
+= Pandoc Gradle Plugin
+
+This plugin downloads and uzips a given pandoc version and uses it to convert a docBook file (generated from an asciidoc file) to `.docx` or `.epub`.
+
+== Usage
+
+== Note
+This plugin was created during the Hackergarten @ https://gr8conf.eu/[gr8conf 2018] in Copenhagen, Denmark.
+
+Initial contributers: https://twitter.com/ixchelruiz[Ixchel Ruiz], https://twitter.com/ysb33r[Schalk Cronjé], https://twitter.com/marioggar[Mario García], https://github.com/joex2[Joe], https://twitter.com/rdmueller[Ralf D. Müller]
