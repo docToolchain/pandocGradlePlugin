@@ -1,0 +1,57 @@
+plugins {
+    id 'groovy'
+}
+
+ext {
+    spockGroovyVer = GroovySystem.version.replaceAll(/\.\d+$/,'') 
+}
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    integrationTestCompile {
+        extendsFrom testCompile
+    }
+    integrationTestRuntime {
+        extendsFrom integrationTestCompile, testRuntime
+    }
+}
+
+dependencies {
+
+    compile 'org.ysb33r.gradle:grolifant:0.5.1'
+    compile localGroovy() 
+    compile gradleApi() 
+
+   testCompile ("org.spockframework:spock-core:1.1-groovy-${spockGroovyVer}") { 
+        exclude module : 'groovy-all' 
+    }
+}
+
+sourceSets {
+    integrationTest {
+        java.srcDir file("src/integrationTest/java")
+        groovy.srcDir file("src/integrationTest/groovy")
+        resources.srcDir file("src/integrationTest/resources")
+        compileClasspath = sourceSets.main.output +  configurations.integrationTestCompile
+        runtimeClasspath = output + compileClasspath + configurations.integrationTestRuntime
+    }
+}
+
+task integrationTest(type: Test, dependsOn: jar) {
+
+    description 'Runs the integration tests'
+    group 'Verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    reports.html.destination = file("${reporting.baseDir}/integrationTests")
+
+    mustRunAfter test
+
+    enabled = !gradle.startParameter.offline
+}
+
+check.dependsOn integrationTest
