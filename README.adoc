@@ -4,7 +4,11 @@ This plugin downloads and uzips a given pandoc version and uses it to convert a 
 
 == Usage
 
-== Note
+
+== Notes
+
 This plugin was created during the Hackergarten @ https://gr8conf.eu/[gr8conf 2018] in Copenhagen, Denmark.
+
+It is based on the Grolifant http://ysb33rorg.gitlab.io/grolifant/0.5.1/docs/product-documentation.html.html[Distribution Installer].
 
 Initial contributers: https://twitter.com/ixchelruiz[Ixchel Ruiz], https://twitter.com/ysb33r[Schalk Cronjé], https://twitter.com/marioggar[Mario García], https://github.com/joex2[Joe], https://twitter.com/rdmueller[Ralf D. Müller]

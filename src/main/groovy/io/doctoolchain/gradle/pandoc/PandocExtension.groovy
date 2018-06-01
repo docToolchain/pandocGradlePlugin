@@ -19,7 +19,7 @@ class PandocExtension {
     File getPandocExecutable() {
         Downloader downloader = new Downloader(getVersion(),this.project)
 
-        new File(downloader.distributionRoot,Downloader.os.isWindows() ? 'bin/pandoc.exe' : 'bin/pandoc')
+        new File(downloader.distributionRoot,Downloader.os.isWindows() ? 'pandoc.exe' : 'bin/pandoc')
     }
 
     private final Project project
