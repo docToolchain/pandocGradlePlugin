@@ -76,7 +76,7 @@ check.dependsOn integrationTest
 gradleTest {
     versions '3.5', '4.0.2', '4.6'
     dependsOn cacheTestProductBinaries
-    musrRunAfter integrationTest
+    mustRunAfter integrationTest
     systemProperties 'io.doctoolchain.gradle.pandoc.uri': productTestCacheDir.absoluteFile.toURI()
 }
 
