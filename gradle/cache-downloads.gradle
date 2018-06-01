@@ -1,0 +1,46 @@
+ext {
+
+    codedProductVersion = (file('src/main/groovy/io/doctoolchain/gradle/pandoc/PandocExtension.groovy').readLines().grep {
+        it =~ /static\s+final\s+String\s+DEFAULT_PANDOC_VERSION\s+=/
+    })[0].replaceFirst(~/^(.+?["'])/, '').replaceFirst(~/(["'].*)$/, '')
+
+    currentOS = org.gradle.internal.os.OperatingSystem.current()
+    productTestCacheDir = file("${buildDir}/pandoc-binaries")
+
+    // Always list the primary test version as the first one in this list.
+    productTestVersions = [codedProductVersion, '2.2']
+
+    productOsArch = { ->
+        def productOS
+        def productExt = 'zip'
+
+        if (currentOS.windows) {
+            productAbi = '-msvc'
+            if (System.getProperty('os.arch').contains('64')) {
+                productOS = 'windows-x86_64'
+            } else {
+                productOS = 'windows-i386'
+            }
+        } else if (currentOS.linux) {
+            productOS = 'linux'
+            productExt = 'tar.gz'
+        } else if (currentOS.macOsX) {
+            productOS = 'macOS'
+        }
+
+        "${productOS}.${productExt}".toString()
+    }.call()
+
+    pandocConfigurationNameFor = { ver ->
+        "pandoc.${ver}"
+    }
+}
+
+task cacheTestProductBinaries {
+    group 'Infrastructure'
+    description 'Download pandoc binaries for test purposes'
+    enabled = !project.gradle.startParameter.offline
+}
+
+
+

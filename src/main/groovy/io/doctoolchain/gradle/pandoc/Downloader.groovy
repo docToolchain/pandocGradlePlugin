@@ -12,7 +12,8 @@ import org.ysb33r.grolifant.api.AbstractDistributionInstaller
 @CompileStatic
 class Downloader extends AbstractDistributionInstaller {
 
-    final static OperatingSystem os = OperatingSystem.current()
+    final static OperatingSystem OS = OperatingSystem.current()
+    final static String baseURI = System.getProperty('io.doctoolchain.gradle.pandoc.uri') ?: 'https://github.com/jgm/pandoc/releases/download'
 
     Downloader(String version, Project project) {
         super("pandoc", version, "binary/pandoc", project)
@@ -20,22 +21,18 @@ class Downloader extends AbstractDistributionInstaller {
 
     @Override
     URI uriFromVersion(String version) {
-        return "https://github.com/jgm/pandoc/releases/download/$version/pandoc-$version-${osArchitecture()}".toURI()
+        "${baseURI}/$version/pandoc-$version-${osArchitecture()}".toURI()
     }
 
     String osArchitecture() {
-        if (os.isWindows()) {
-            return "windows-x86_64.zip"
+        if (OS.isWindows()) {
+            System.getProperty('os.arch').contains('64') ? 'windows-x86_64.zip' : 'windows-i386.zip'
+        } else if (OS.isLinux()) {
+            "linux.tar.gz"
+        } else if (OS.isMacOsX()) {
+            "macOS.zip"
+        } else {
+            throw new GradleException("${OS} does not support downloading of pandoc")
         }
-
-        if (os.isLinux()){
-            return "linux.tar.gz"
-        }
-
-        if (os.isMacOsX()) {
-            return "macOS.zip"
-        }
-
-        throw new GradleException("Unssuported OS")
     }
 }
