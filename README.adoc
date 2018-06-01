@@ -1,5 +1,7 @@
 = Pandoc Gradle Plugin
 
+image::https://travis-ci.org/docToolchain/pandocGradlePlugin.svg?branch=master["Build Status", link="https://travis-ci.org/docToolchain/pandocGradlePlugin"]
+
 This plugin downloads and uzips a given pandoc version and uses it to convert a docBook file (generated from an asciidoc file) to `.docx` or `.epub`.
 
 == Usage
